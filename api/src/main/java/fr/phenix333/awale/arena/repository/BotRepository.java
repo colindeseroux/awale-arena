@@ -18,7 +18,7 @@ public interface BotRepository extends JpaRepository<Bot, Long> {
     @Query("SELECT b FROM Bot b WHERE b.activated = true")
     List<Bot> findActivatedBots();
 
-    @Query("SELECT b FROM Bot b WHERE b.activated = true AND NOT EXISTS (SELECT 1 FROM Game g WHERE (g.bot1 = b OR g.bot2 = b) AND (g.bot1 = :bot OR g.bot2 = :bot))")
-    List<Bot> findActivatedBotsAndNoMatchingBetween(Bot bot);
+    @Query("SELECT b FROM Bot b WHERE b.activated = true AND NOT EXISTS (SELECT 1 FROM Game g WHERE (g.bot1 = b OR g.bot2 = b) AND (g.bot1 = :bot OR g.bot2 = :bot) AND DATE(g.createdAt) = DATE(CURRENT_TIMESTAMP))")
+    List<Bot> findActivatedBotsAndNoMatchingBetweenForToday(Bot bot);
 
 }

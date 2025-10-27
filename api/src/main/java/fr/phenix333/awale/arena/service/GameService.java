@@ -82,7 +82,7 @@ public class GameService {
     private void testBot(Bot bot) {
         L.function("Test a bot | bot : {}", bot);
 
-        this.botRepository.findActivatedBotsAndNoMatchingBetween(bot).forEach(activatedBot -> {
+        this.botRepository.findActivatedBotsAndNoMatchingBetweenForToday(bot).forEach(activatedBot -> {
             L.info("Playing game for bot testing | bot : {} | activatedBot : {}", bot.getId(), activatedBot.getId());
 
             if (bot.getId().equals(activatedBot.getId())) {
