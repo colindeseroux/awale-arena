@@ -109,9 +109,9 @@ public class BotService {
     }
 
     /**
-     * Scheduled task to delete files of inactive bots daily at 1 AM.
+     * Scheduled task to delete files of inactive bots daily.
      */
-    @Scheduled(cron = "0 0 1 * * ?")
+    @Scheduled(cron = "30 0 * * * ?")
     protected void deleteFilesOfInactivatedBots() {
         this.botRepository.findInactivatedBots().forEach(bot -> {
             L.info("Deleting inactivated bot: {}", bot);
@@ -123,7 +123,7 @@ public class BotService {
     /**
      * Scheduled task to retest all activated bots daily at midnight.
      */
-    @Scheduled(cron = "30 0 0 * * ?")
+    @Scheduled(cron = "0 1 0 * * ?")
     protected void retestActivatedBots() {
         this.botRepository.findActivatedBots().forEach(bot -> {
             this.gameService.addBotToTest(bot);
