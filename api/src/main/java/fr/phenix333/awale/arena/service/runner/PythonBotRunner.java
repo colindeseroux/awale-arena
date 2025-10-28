@@ -6,7 +6,7 @@ public class PythonBotRunner implements BotRunnerStrategy {
 
     @Override
     public Process run(File botFile, int playerNumber) throws Exception {
-        ProcessBuilder pb = new ProcessBuilder("python", botFile.getName(), String.valueOf(playerNumber));
+        ProcessBuilder pb = new ProcessBuilder("python3", botFile.getName(), String.valueOf(playerNumber));
         pb.directory(botFile.getParentFile());
 
         return pb.start();
