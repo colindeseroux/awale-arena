@@ -77,8 +77,10 @@ public class ArenaService {
 
         File botsDir = new File(FileUtils.getUserDirectory(), "bots");
 
-        File[] files = botsDir.listFiles((dir, name) -> name.startsWith(game.getBot1().getId().toString() + ".")
-                || name.startsWith(game.getBot2().getId().toString() + "."));
+        File[] files = new File[2];
+
+        files[0] = botsDir.listFiles((dir, name) -> name.startsWith(game.getBot1().getId().toString() + "."))[0];
+        files[1] = botsDir.listFiles((dir, name) -> name.startsWith(game.getBot2().getId().toString() + "."))[0];
 
         return files;
     }
