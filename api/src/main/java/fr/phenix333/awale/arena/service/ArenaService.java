@@ -16,6 +16,8 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 
 import fr.phenix333.awale.arena.model.Game;
+import fr.phenix333.awale.arena.service.runner.BotRunnerFactory;
+import fr.phenix333.awale.arena.service.runner.BotRunnerStrategy;
 import fr.phenix333.logger.MyLogger;
 import lombok.RequiredArgsConstructor;
 
@@ -30,39 +32,20 @@ public class ArenaService {
 
     private static final MyLogger L = MyLogger.create(ArenaService.class);
 
-    private static final String[] languagesSupported = new String[] { "py" };
-    private static final String[] cmds = new String[] { "python" };
-
     /**
      * Get the ProcessBuilder for a bot file.
      * 
      * @param botFile      -> File : the bot file
      * @param playerNumber -> int : the player number
      * 
-     * @return ProcessBuilder -> The process builder for the bot
+     * @return Process -> The process for the bot
+     * 
+     * @throws Exception
      */
-    private ProcessBuilder getProcessBuilder(File botFile, int playerNumber) {
-        L.function("Getting process builder for a bot file and a player number | botFile : {}, playerNumber : {}",
-                botFile.getAbsolutePath(), playerNumber);
+    private Process getProcessBuilder(File botFile, int playerNumber) throws Exception {
+        BotRunnerStrategy strategy = BotRunnerFactory.getStrategy(botFile);
 
-        String fileName = botFile.getName();
-
-        for (int i = 0; i < languagesSupported.length; i++) {
-            if (fileName.endsWith(languagesSupported[i])) {
-                String[] cmdParts = cmds[i].split(" ");
-                String[] firejailCmd = {}; // { "firejail", "--net=none", "--private=/bots", "--rlimit-as=500M" };
-                String[] fullCommand = new String[firejailCmd.length + cmdParts.length + 2];
-
-                System.arraycopy(firejailCmd, 0, fullCommand, 0, firejailCmd.length);
-                System.arraycopy(cmdParts, 0, fullCommand, firejailCmd.length, cmdParts.length);
-                fullCommand[firejailCmd.length + cmdParts.length] = botFile.getAbsolutePath();
-                fullCommand[firejailCmd.length + cmdParts.length + 1] = String.valueOf(playerNumber);
-
-                return new ProcessBuilder(fullCommand);
-            }
-        }
-
-        throw new IllegalArgumentException("Unsupported bot file: " + fileName);
+        return strategy.run(botFile, playerNumber);
     }
 
     /**
@@ -103,34 +86,35 @@ public class ArenaService {
                 try {
                     return reader.readLine();
                 } catch (IOException e) {
-                    Thread.currentThread().interrupt();
-
+                    L.debug("IOException in readLine: {}", e.getMessage());
                     return "TimeOut";
                 }
             });
 
             try {
-                return future.get(timeoutMillis, TimeUnit.MILLISECONDS);
+                String result = future.get(timeoutMillis, TimeUnit.MILLISECONDS);
+                L.debug("Received move: {}", result);
+                return result != null ? result : "TimeOut";
             } catch (TimeoutException e) {
-                L.debug("Timeout reached after {} ms", timeoutMillis);
+                L.warn("Timeout reached after {} ms", timeoutMillis);
                 future.cancel(true);
-
                 return "TimeOut";
             } catch (Exception e) {
                 L.error("Error while waiting for move", e);
-
                 return "TimeOut";
             }
         } finally {
             executor.shutdownNow();
 
             try {
-                if (!executor.awaitTermination(100, TimeUnit.MILLISECONDS)) {
-                    L.warn("Executor did not terminate gracefully");
+                if (!executor.awaitTermination(500, TimeUnit.MILLISECONDS)) {
+                    L.warn("Executor did not terminate gracefully, forcing shutdown");
+                    executor.shutdownNow();
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 L.warn("Interrupted while waiting for executor termination");
+                executor.shutdownNow();
             }
         }
     }
@@ -218,23 +202,46 @@ public class ArenaService {
 
         File[] files = this.getBotFiles(game);
 
+        System.out.println("Bot files: " + files[0].getAbsolutePath() + ", " + files[1].getAbsolutePath());
+
         Process bot1 = null;
         Process bot2 = null;
 
         try {
-            bot2 = this.getProcessBuilder(files[1], 2).start();
-            bot1 = this.getProcessBuilder(files[0], 1).start();
+            bot2 = this.getProcessBuilder(files[1], 2);
+            bot1 = this.getProcessBuilder(files[0], 1);
 
             game = this.runGameLoop(bot1, bot2, game);
-        } catch (IOException e) {
+        } catch (Exception e) {
             L.error("Error during game", e);
         } finally {
+            // Force termination of processes
             if (bot1 != null) {
-                bot1.destroy();
+                try {
+                    bot1.destroy();
+                    if (!bot1.waitFor(1000, TimeUnit.MILLISECONDS)) {
+                        L.warn("Bot1 process did not terminate gracefully, forcing kill");
+                        bot1.destroyForcibly();
+                    }
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    L.warn("Interrupted while waiting for bot1 termination");
+                    bot1.destroyForcibly();
+                }
             }
 
             if (bot2 != null) {
-                bot2.destroy();
+                try {
+                    bot2.destroy();
+                    if (!bot2.waitFor(1000, TimeUnit.MILLISECONDS)) {
+                        L.warn("Bot2 process did not terminate gracefully, forcing kill");
+                        bot2.destroyForcibly();
+                    }
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    L.warn("Interrupted while waiting for bot2 termination");
+                    bot2.destroyForcibly();
+                }
             }
         }
 
