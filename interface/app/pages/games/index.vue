@@ -3,6 +3,7 @@ import type { DataTableHeader } from "vuetify";
 import { compositedGames } from "@/composables/parseSupabase";
 import NewBot from "@/components/games/NewBot.vue";
 import Replay from "@/components/games/Replay.vue";
+import { VSkeletonLoader } from "vuetify/components";
 
 definePageMeta({
     layout: "dashboard",
@@ -42,9 +43,13 @@ const headers = computed<DataTableHeader[]>(() => [
 ]);
 const search = ref<string>("");
 
-const { formattedGames } = compositedGames();
+const { formattedGames, isLoading } = compositedGames();
 
 const filteredGames = computed(() => {
+    if (!formattedGames.value) {
+        return [];
+    }
+
     if (!search.value) {
         return formattedGames.value;
     }
@@ -73,78 +78,86 @@ const filteredGames = computed(() => {
 </script>
 
 <template>
-    <VDataTable
-        class="games"
-        fixed-header
-        show-expand
-        :headers="headers"
-        :items="filteredGames"
-        :mobile="(width as number) < 905"
+    <VSkeletonLoader
+        class="mx-2 mt-2"
+        boilerplate
+        elevation="2"
+        type="table-heading, table-thead, table-tbody, table-tfoot"
+        :loading="isLoading"
     >
-        <template #top>
-            <VSheet
-                class="d-flex flex-wrap justify-space-between align-center pa-2"
-                color="primary"
-            >
-                <h1 class="ml-5">{{ $t("games.title") }}</h1>
+        <VDataTable
+            class="games"
+            fixed-header
+            show-expand
+            :headers="headers"
+            :items="filteredGames"
+            :mobile="(width as number) < 905"
+        >
+            <template #top>
+                <VSheet
+                    class="d-flex flex-wrap justify-space-between align-center pa-2"
+                    color="primary"
+                >
+                    <h1 class="ml-5">{{ $t("games.title") }}</h1>
 
-                <VDivider class="mx-4" inset vertical />
+                    <VDivider class="mx-4" inset vertical />
 
-                <VTextField
-                    v-model="search"
-                    append-icon="mdi-magnify"
-                    min-width="270"
-                    max-width="500"
-                    single-line
-                    hide-details
-                    :label="$t('games.search')"
+                    <VTextField
+                        v-model="search"
+                        append-icon="mdi-magnify"
+                        min-width="270"
+                        max-width="500"
+                        single-line
+                        hide-details
+                        :label="$t('games.search')"
+                    />
+
+                    <VDivider class="mx-4" inset vertical />
+
+                    <NewBot />
+                </VSheet>
+            </template>
+
+            <template #[`item.bot_1`]="{ item, value }">
+                <VChip
+                    :border="`${item.winner === 0 ? 'primary' : item.winner === 1 ? 'success' : 'error'} thin opacity-25`"
+                    :color="
+                        item.winner === 0
+                            ? 'primary'
+                            : item.winner === 1
+                              ? 'success'
+                              : 'error'
+                    "
+                    :text="value"
                 />
+            </template>
 
-                <VDivider class="mx-4" inset vertical />
+            <template #[`item.bot_2`]="{ item, value }">
+                <VChip
+                    :border="`${item.winner === 0 ? 'primary' : item.winner === 2 ? 'success' : 'error'} thin opacity-25`"
+                    :color="
+                        item.winner === 0
+                            ? 'primary'
+                            : item.winner === 2
+                              ? 'success'
+                              : 'error'
+                    "
+                    :text="value"
+                />
+            </template>
 
-                <NewBot />
-            </VSheet>
-        </template>
-
-        <template #[`item.bot_1`]="{ item, value }">
-            <VChip
-                :border="`${item.winner === 0 ? 'primary' : item.winner === 1 ? 'success' : 'error'} thin opacity-25`"
-                :color="
-                    item.winner === 0
-                        ? 'primary'
-                        : item.winner === 1
-                          ? 'success'
-                          : 'error'
-                "
-                :text="value"
-            />
-        </template>
-
-        <template #[`item.bot_2`]="{ item, value }">
-            <VChip
-                :border="`${item.winner === 0 ? 'primary' : item.winner === 2 ? 'success' : 'error'} thin opacity-25`"
-                :color="
-                    item.winner === 0
-                        ? 'primary'
-                        : item.winner === 2
-                          ? 'success'
-                          : 'error'
-                "
-                :text="value"
-            />
-        </template>
-
-        <template #expanded-row="{ item }">
-            <tr>
-                <td />
-                <td>{{ item.bot1.commitLink }}</td>
-                <td>{{ item.bot2.commitLink }}</td>
-                <td>
-                    <Replay :game="item" />
-                </td>
-            </tr>
-        </template>
-    </VDataTable>
+            <template #expanded-row="{ item }">
+                <tr>
+                    <td />
+                    <td>{{ item.bot1.commitLink }}</td>
+                    <td>{{ item.bot2.commitLink }}</td>
+                    <td>
+                        <Replay :game="item" />
+                    </td>
+                </tr>
+            </template>
+        </VDataTable>
+    </VSkeletonLoader>
 </template>
 
 <style scoped>

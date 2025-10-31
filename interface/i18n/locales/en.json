@@ -68,6 +68,7 @@
         },
         "input": {
             "clear": "Clear"
-        }
+        },
+        "loading": "Loading..."
     }
 }

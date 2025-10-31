@@ -68,6 +68,7 @@
         },
         "input": {
             "clear": "Effacer"
-        }
+        },
+        "loading": "Chargement..."
     }
 }
