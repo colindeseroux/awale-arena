@@ -1,0 +1,73 @@
+{
+    "botInfos": {
+        "name": "Nom",
+        "group": "Groupe",
+        "createdAt": "Créé le",
+        "commitLink": "Lien du commit / référence"
+    },
+    "games": {
+        "bot": "Joueur",
+        "createdAt": "Créé le",
+        "draw": "Match nul",
+        "search": "Rechercher...",
+        "title": "Parties",
+        "winner": "Gagnant"
+    },
+    "home": {
+        "title": "Awale Arena"
+    },
+    "navigationDrawer": {
+        "games": "Parties",
+        "home": "Accueil"
+    },
+    "newBot": {
+        "adds": "Ajouter le bot",
+        "cancel": "Annuler",
+        "commitLink": "Lien du commit / référence",
+        "dragAndDrop": "Glissez-déposez un fichier ici ou cliquez pour sélectionner",
+        "name": "Nom",
+        "newBot": "Nouveau bot",
+        "pleaseUploadFile": "Veuillez télécharger un fichier.",
+        "selectedFile": "Fichier sélectionné : {fileName}",
+        "group": "Groupe",
+        "fieldIsRequired": "Ce champ est obligatoire",
+        "fieldsAreRequired": "Des champs sont obligatoires",
+        "BotNameAlreadyExists": "Un bot avec ce nom existe déjà dans ce groupe.",
+        "OopsError": "Une erreur s'est produite."
+    },
+    "replay": {
+        "title": "Replay",
+        "info": "Informations sur la partie",
+        "gameId": "ID de la partie",
+        "createdAt": "Créé le",
+        "winner": "Gagnant",
+        "draw": "Match nul",
+        "gameplay": "Déroulement de la partie",
+        "close": "Fermer"
+    },
+    "$vuetify": {
+        "open": "Ouvrir",
+        "close": "Fermer",
+        "noDataText": "Aucune donnée disponible",
+        "pagination": {
+            "ariaLabel": {
+                "root": "Pagination Navigation"
+            }
+        },
+        "dataFooter": {
+            "itemsPerPageText": "Éléments par page :",
+            "itemsPerPageAll": "Tous",
+            "pageText": "{0}-{1} de {2}",
+            "firstPage": "Première page",
+            "prevPage": "Page précédente",
+            "nextPage": "Page suivante",
+            "lastPage": "Dernière page"
+        },
+        "dataTable": {
+            "sortBy": "Trier par"
+        },
+        "input": {
+            "clear": "Effacer"
+        }
+    }
+}

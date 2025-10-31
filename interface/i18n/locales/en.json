@@ -1,0 +1,73 @@
+{
+    "botInfos": {
+        "name": "Name",
+        "group": "Group",
+        "createdAt": "Created at",
+        "commitLink": "Commit link / reference"
+    },
+    "games": {
+        "bot": "Player",
+        "createdAt": "Created at",
+        "draw": "Draw",
+        "search": "Search...",
+        "title": "Games",
+        "winner": "Winner"
+    },
+    "home": {
+        "title": "Awale Arena"
+    },
+    "navigationDrawer": {
+        "games": "Games",
+        "home": "Home"
+    },
+    "newBot": {
+        "adds": "Add bot",
+        "cancel": "Cancel",
+        "commitLink": "Commit link / reference",
+        "dragAndDrop": "Drag and drop a file here or click to select",
+        "name": "Name",
+        "newBot": "New bot",
+        "pleaseUploadFile": "Please upload a file.",
+        "selectedFile": "Selected file: {fileName}",
+        "group": "Group",
+        "fieldIsRequired": "This field is required",
+        "fieldsAreRequired": "Some fields are required",
+        "BotNameAlreadyExists": "A bot with this name already exists in this group.",
+        "OopsError": "An error occurred."
+    },
+    "replay": {
+        "title": "Replay",
+        "info": "Game information",
+        "gameId": "Game ID",
+        "createdAt": "Created at",
+        "winner": "Winner",
+        "draw": "Draw",
+        "gameplay": "Gameplay",
+        "close": "Close"
+    },
+    "$vuetify": {
+        "open": "Open",
+        "close": "Close",
+        "noDataText": "No data available",
+        "pagination": {
+            "ariaLabel": {
+                "root": "Pagination Navigation"
+            }
+        },
+        "dataFooter": {
+            "itemsPerPageText": "Items per page:",
+            "itemsPerPageAll": "All",
+            "pageText": "{0}-{1} of {2}",
+            "firstPage": "First page",
+            "prevPage": "Previous page",
+            "nextPage": "Next page",
+            "lastPage": "Last page"
+        },
+        "dataTable": {
+            "sortBy": "Sort by"
+        },
+        "input": {
+            "clear": "Clear"
+        }
+    }
+}
