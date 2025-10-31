@@ -1,8 +1,5 @@
 FROM node:lts-alpine AS build
 
-ENV API_BASE_URL=""
-ENV SW=true
-
 WORKDIR /app
 
 COPY . .
