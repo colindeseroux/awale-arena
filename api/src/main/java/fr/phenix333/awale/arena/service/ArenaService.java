@@ -54,16 +54,25 @@ public class ArenaService {
      * @param game -> Game : the game
      * 
      * @return File[] -> The bot files
+     * 
+     * @throws Exception
      */
-    private File[] getBotFiles(Game game) {
+    private File[] getBotFiles(Game game) throws Exception {
         L.function("Getting bot files for game | game : {}", game);
 
         File botsDir = new File(FileUtils.getUserDirectory(), "bots");
 
         File[] files = new File[2];
 
-        files[0] = botsDir.listFiles((dir, name) -> name.startsWith(game.getBot1().getId().toString() + "."))[0];
-        files[1] = botsDir.listFiles((dir, name) -> name.startsWith(game.getBot2().getId().toString() + "."))[0];
+        File[] bot1 = botsDir.listFiles((dir, name) -> name.startsWith(game.getBot1().getId().toString() + "."));
+        File[] bot2 = botsDir.listFiles((dir, name) -> name.startsWith(game.getBot2().getId().toString() + "."));
+
+        if (bot1 == null || bot1.length == 0 || bot2 == null || bot2.length == 0) {
+            throw new Exception("Bot files not found");
+        }
+
+        files[0] = bot1[0];
+        files[1] = bot2[0];
 
         return files;
     }
@@ -200,14 +209,12 @@ public class ArenaService {
     public Game playGame(Game game) {
         L.function("Playing a game between two bots | game : {}", game);
 
-        File[] files = this.getBotFiles(game);
-
-        System.out.println("Bot files: " + files[0].getAbsolutePath() + ", " + files[1].getAbsolutePath());
-
         Process bot1 = null;
         Process bot2 = null;
 
         try {
+            File[] files = this.getBotFiles(game);
+
             bot2 = this.getProcessBuilder(files[1], 2);
             bot1 = this.getProcessBuilder(files[0], 1);
 

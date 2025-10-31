@@ -82,7 +82,7 @@ public class BotService {
 
         this.saveFile(file, bot.getId());
 
-        gameService.addBotToTest(bot);
+        this.gameService.addBotToTest(bot);
 
         return bot;
     }

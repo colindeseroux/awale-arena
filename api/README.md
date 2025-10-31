@@ -27,7 +27,7 @@ docker build -t awale-arena:latest .
 ```
 
 ```sh
-docker run -d -e SUPABASE_USER="<user>" -e SUPABASE_PASSWORD="<password>" -v ${PWD}/Logs:/app/Logs -v ${PWD}/bots:/root/bots -p 3001:3001 --name awale-arena awale-arena:latest
+docker run -d -e SUPABASE_USER="<user>" -e SUPABASE_PASSWORD="<password>" -e CORS_ALLOWED_ORIGINS="<*>" -v ${PWD}/Logs:/app/Logs -v ${PWD}/bots:/root/bots -p 3001:3001 --name awale-arena awale-arena:latest
 ```
 
 ---
