@@ -197,23 +197,24 @@ public class Game {
      */
     private int distributeSeeds() {
         int[] pitColors = this.getPitColors();
-        int nbSeeds = pitColors[this.lastMove.getIndex()];
+        int startIndex = this.lastMove.getIndex();
+        int nbSeeds = pitColors[startIndex];
+        pitColors[startIndex] = 0;
 
-        pitColors[this.lastMove.getIndex()] = 0;
-        int lastIndex;
+        int lastIndex = startIndex;
+        int step = this.lastMove.getColor().equals("R") ? 1 : 2;
+        int distributed = 0;
 
-        if (this.lastMove.getColor().equals("R")) {
-            for (int i = 1; i <= nbSeeds; i++) {
-                pitColors[(this.lastMove.getIndex() + i) % 16]++;
+        while (distributed < nbSeeds) {
+            lastIndex = (lastIndex + step) % 16;
+
+            // Pass over the starting pit
+            if (lastIndex == startIndex) {
+                lastIndex = (lastIndex + step) % 16;
             }
 
-            lastIndex = (this.lastMove.getIndex() + nbSeeds) % 16;
-        } else {
-            for (int i = 1; i <= nbSeeds * 2; i += 2) {
-                pitColors[(this.lastMove.getIndex() + i) % 16]++;
-            }
-
-            lastIndex = (this.lastMove.getIndex() + nbSeeds * 2) % 16;
+            pitColors[lastIndex]++;
+            distributed++;
         }
 
         return lastIndex;
