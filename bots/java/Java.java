@@ -54,20 +54,19 @@ public class Java {
             int nbSeeds = pitColors[pitIndex];
             pitColors[pitIndex] = 0;
 
-            int lastIndex;
+            int lastIndex = pitIndex;
+            int step = (Character.toUpperCase(pitColor) == 'R') ? 1 : 2;
+            int distributed = 0;
 
-            if (Character.toUpperCase(pitColor) == 'R') {
-                for (int i = 1; i <= nbSeeds; i++) {
-                    pitColors[(pitIndex + i) % 16]++;
+            while (distributed < nbSeeds) {
+                lastIndex = (lastIndex + step) % 16;
+
+                if (lastIndex == pitIndex) {
+                    lastIndex = (lastIndex + step) % 16;
                 }
 
-                lastIndex = (pitIndex + nbSeeds) % 16;
-            } else {
-                for (int i = 1; i < nbSeeds * 2; i += 2) {
-                    pitColors[(pitIndex + i) % 16]++;
-                }
-
-                lastIndex = (pitIndex + nbSeeds * 2) % 16;
+                pitColors[lastIndex]++;
+                distributed++;
             }
 
             this.captureSeeds(lastIndex);

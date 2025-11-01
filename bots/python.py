@@ -23,20 +23,21 @@ class Game:
         
         nb_seeds = pit_colors[pit_index]
         pit_colors[pit_index] = 0
-        
-        if pit_color == "R":
-            for i in range(1, nb_seeds + 1):
-                pit_colors[(pit_index + i) % 16] += 1
-                
-            last_index = (pit_index + nb_seeds) % 16
-        else:
-            for i in range(1, nb_seeds * 2, 2):
-                pit_colors[(pit_index + i) % 16] += 1
-                
-            last_index = (pit_index + nb_seeds * 2) % 16
-        
+
+        step = 1 if pit_color == "R" else 2
+        last_index = pit_index
+        distributed = 0
+
+        while distributed < nb_seeds:
+            last_index = (last_index + step) % 16
+
+            if last_index == pit_index:
+                last_index = (last_index + step) % 16
+
+            pit_colors[last_index] += 1
+            distributed += 1
+
         self.capture_seeds(last_index)
-        
         self.current_player = (self.current_player + 1) % 2
 
     def capture_seeds(self, last_index: int):
