@@ -11,7 +11,7 @@ const cookieGroupName = useCookie("groupName");
 const dialogOpen = ref(false);
 const error = ref<string | null>(null);
 const rules = {
-    required: (value: string) => !!value || t("newBot.fieldIsRequired"),
+    required: (value: string) => !!value || t("games.newBot.fieldIsRequired"),
 };
 
 const bot = ref<AddBotPayload>({
@@ -48,12 +48,12 @@ const handleFileChange = (event: Event) => {
 
 const addBot = async () => {
     if (!file.value) {
-        error.value = "newBot.pleaseUploadFile";
+        error.value = "games.newBot.pleaseUploadFile";
         return;
     }
 
     if (!bot.value.name || !bot.value.group.name) {
-        error.value = "newBot.fieldsAreRequired";
+        error.value = "games.newBot.fieldsAreRequired";
         return;
     }
 
@@ -81,7 +81,7 @@ const addBot = async () => {
             dialogOpen.value = false;
         })
         .catch(err => {
-            error.value = `newBot.${err.response._data}`;
+            error.value = `games.newBot.${err.response._data}`;
         });
 };
 </script>
@@ -96,30 +96,30 @@ const addBot = async () => {
                 prepend-icon="mdi-plus"
                 @click="dialogOpen = true"
             >
-                {{ $t("newBot.newBot") }}
+                {{ $t("games.newBot.newBot") }}
             </VBtn>
         </template>
 
         <VCard>
-            <VCardTitle>{{ $t("newBot.newBot") }}</VCardTitle>
+            <VCardTitle>{{ $t("games.newBot.newBot") }}</VCardTitle>
 
             <VCardItem>
                 <CustomVTextField
                     v-model="bot.name"
                     icon="$vuetify"
-                    :label="$t('newBot.name')"
+                    :label="$t('games.newBot.name')"
                     :required="true"
                     :rules="[rules.required]"
                 />
                 <CustomVTextField
                     v-model="bot.commitLink"
                     icon="$vuetify"
-                    :label="$t('newBot.commitLink')"
+                    :label="$t('games.newBot.commitLink')"
                 />
                 <CustomVTextField
                     v-model="bot.group.name"
                     icon="mdi-account"
-                    :label="$t('newBot.group')"
+                    :label="$t('games.newBot.group')"
                     :required="true"
                     :rules="[rules.required]"
                 />
@@ -139,17 +139,21 @@ const addBot = async () => {
                     @click="fileInput?.click()"
                 >
                     <p v-if="!file">
-                        {{ $t("newBot.dragAndDrop") }}
+                        {{ $t("games.newBot.dragAndDrop") }}
                     </p>
                     <p v-else>
-                        {{ $t("newBot.selectedFile", { fileName: file.name }) }}
+                        {{
+                            $t("games.newBot.selectedFile", {
+                                fileName: file.name,
+                            })
+                        }}
                     </p>
                     <input
                         ref="fileInput"
                         type="file"
                         style="display: none"
                         @change="handleFileChange"
-                    >
+                    />
                 </div>
             </VCardItem>
 
@@ -166,10 +170,10 @@ const addBot = async () => {
                     variant="outlined"
                     @click="dialogOpen = false"
                 >
-                    {{ $t("newBot.cancel") }}
+                    {{ $t("games.newBot.cancel") }}
                 </VBtn>
                 <VBtn color="success" variant="outlined" @click="addBot">
-                    {{ $t("newBot.adds") }}
+                    {{ $t("games.newBot.adds") }}
                 </VBtn>
             </VCardActions>
         </VCard>

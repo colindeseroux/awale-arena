@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Game } from "@/types/game";
-import BotInfos from "@/components/games/replay/BotInfos.vue";
+import Infos from "@/components/games/replay/Infos.vue";
+import Simulation from "@/components/games/replay/Simulation.vue";
 
 const properties = defineProps<{
     game: Game;
@@ -19,64 +20,17 @@ const dialogOpen = ref(false);
                 prepend-icon="mdi-arrow-right-drop-circle"
                 @click="dialogOpen = true"
             >
-                {{ $t("replay.title") }}
+                {{ $t("games.replay.title") }}
             </VBtn>
         </template>
 
-        <VCard class="d-flex flex-column">
-            <VCardTitle>{{ $t("replay.title") }}</VCardTitle>
+        <VCard class="d-flex">
+            <VCardTitle>{{ $t("games.replay.title") }}</VCardTitle>
 
-            <div class="d-flex flex-grow-1 gap-2 ma-2">
-                <VCard class="bg-secondary mr-1" max-width="300px">
-                    <VCardTitle>{{ $t("replay.info") }}</VCardTitle>
+            <div class="d-flex flex-row flex-grow-1 gap-2 ma-2">
+                <Infos :game="properties.game" />
 
-                    <VCardText>
-                        <VCard>
-                            <VCardText>
-                                <p>
-                                    <strong>{{ $t("replay.gameId") }}:</strong>
-                                    {{ properties.game.id }}
-                                </p>
-
-                                <p>
-                                    <strong>
-                                        {{ $t("replay.createdAt") }}:
-                                    </strong>
-                                    {{
-                                        properties.game.createdAt.toLocaleString()
-                                    }}
-                                </p>
-
-                                <p>
-                                    <strong>{{ $t("replay.winner") }}:</strong>
-                                    {{
-                                        properties.game.winner === 0
-                                            ? $t("replay.draw")
-                                            : properties.game.winner === 1
-                                              ? properties.game.bot1.name
-                                              : properties.game.bot2.name
-                                    }}
-                                </p>
-                            </VCardText>
-                        </VCard>
-
-                        <VDivider />
-
-                        <BotInfos :bot="properties.game.bot1" />
-
-                        <VDivider />
-
-                        <BotInfos :bot="properties.game.bot2" />
-                    </VCardText>
-                </VCard>
-
-                <VCard class="bg-error" style="flex: 1">
-                    <VCardTitle>{{ $t("replay.gameplay") }}</VCardTitle>
-
-                    <VCardText>
-                        <p>{{ properties.game.moves }}</p>
-                    </VCardText>
-                </VCard>
+                <Simulation :game="properties.game" />
             </div>
 
             <VCardActions>
@@ -86,7 +40,7 @@ const dialogOpen = ref(false);
                     variant="outlined"
                     @click="dialogOpen = false"
                 >
-                    {{ $t("replay.close") }}
+                    {{ $t("games.replay.close") }}
                 </VBtn>
             </VCardActions>
         </VCard>

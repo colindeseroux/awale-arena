@@ -96,7 +96,7 @@ const filteredGames = computed(() => {
             <template #top>
                 <VSheet
                     class="d-flex flex-wrap justify-space-between align-center pa-2"
-                    color="primary"
+                    color="secondary"
                 >
                     <h1 class="ml-5">{{ $t("games.title") }}</h1>
 
@@ -105,6 +105,7 @@ const filteredGames = computed(() => {
                     <VTextField
                         v-model="search"
                         append-icon="mdi-magnify"
+                        class="search"
                         min-width="270"
                         max-width="500"
                         single-line
@@ -144,6 +145,34 @@ const filteredGames = computed(() => {
                     "
                     :text="value"
                 />
+            </template>
+
+            <template
+                #[`item.data-table-expand`]="{
+                    internalItem,
+                    isExpanded,
+                    toggleExpand,
+                }"
+            >
+                <VBtn
+                    icon
+                    variant="text"
+                    density="compact"
+                    :aria-label="
+                        isExpanded(internalItem)
+                            ? $t('games.collapseRow')
+                            : $t('games.expandRow')
+                    "
+                    @click="toggleExpand(internalItem)"
+                >
+                    <VIcon>
+                        {{
+                            isExpanded(internalItem)
+                                ? "mdi-chevron-up"
+                                : "mdi-chevron-down"
+                        }}
+                    </VIcon>
+                </VBtn>
             </template>
 
             <template #expanded-row="{ item }">
