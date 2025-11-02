@@ -4,6 +4,7 @@ import type { SupabaseWaiting } from "@/types/waiting";
 export const useWaitings = () => {
     const supabase = useSupabaseClient();
     const waitings = ref<SupabaseWaiting[]>([]);
+    const waitingsFetched = ref(false);
 
     const getWaitings = async () => {
         const { data: waitings } = await supabase.from("waitings").select();
@@ -25,6 +26,7 @@ export const useWaitings = () => {
 
     const load = async () => {
         waitings.value = await getWaitings();
+        waitingsFetched.value = true;
     };
 
     const subscriptionInsert = supabase

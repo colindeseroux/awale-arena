@@ -3,6 +3,7 @@ import type { Group } from "@/types/group";
 export const useGroups = () => {
     const supabase = useSupabaseClient();
     const groups = ref<Group[]>([]);
+    const groupsFetched = ref(false);
 
     const getGroups = async () => {
         const { data: groups } = await supabase.from("groups").select();
@@ -12,6 +13,7 @@ export const useGroups = () => {
 
     const load = async () => {
         groups.value = await getGroups();
+        groupsFetched.value = true;
     };
 
     const subscription = supabase
@@ -31,5 +33,5 @@ export const useGroups = () => {
 
     load();
 
-    return { groups };
+    return { groups, groupsFetched };
 };

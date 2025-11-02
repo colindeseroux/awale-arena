@@ -3,6 +3,7 @@ import type { SupabaseGame } from "@/types/game";
 export const useGames = () => {
     const supabase = useSupabaseClient();
     const games = ref<SupabaseGame[]>([]);
+    const gamesFetched = ref(false);
 
     const getGames = async () => {
         const { data: gamesData } = await supabase.from("games").select();
@@ -12,6 +13,7 @@ export const useGames = () => {
 
     const load = async () => {
         games.value = await getGames();
+        gamesFetched.value = true;
     };
 
     const subscription = supabase
@@ -31,5 +33,5 @@ export const useGames = () => {
 
     load();
 
-    return { games };
+    return { games, gamesFetched };
 };

@@ -3,6 +3,7 @@ import type { SupabaseBot } from "@/types/bot";
 export const useBots = () => {
     const supabase = useSupabaseClient();
     const bots = ref<SupabaseBot[]>([]);
+    const botsFetched = ref(false);
 
     const getBots = async () => {
         const { data: bots } = await supabase.from("bots").select();
@@ -12,6 +13,7 @@ export const useBots = () => {
 
     const load = async () => {
         bots.value = await getBots();
+        botsFetched.value = true;
     };
 
     const subscription = supabase
@@ -31,5 +33,5 @@ export const useBots = () => {
 
     load();
 
-    return { bots };
+    return { bots, botsFetched };
 };

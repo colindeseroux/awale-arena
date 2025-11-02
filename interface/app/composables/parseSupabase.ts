@@ -2,9 +2,9 @@ import type { Bot } from "@/types/bot";
 import type { Game } from "@/types/game";
 
 export const compositedGames = () => {
-    const { games } = useGames();
-    const { bots } = useBots();
-    const { groups } = useGroups();
+    const { games, gamesFetched } = useGames();
+    const { bots, botsFetched } = useBots();
+    const { groups, groupsFetched } = useGroups();
 
     const formattedGames = computed(() => {
         const gamesList: Game[] = [];
@@ -58,7 +58,7 @@ export const compositedGames = () => {
     });
 
     const isLoading = computed(
-        () => !bots.value.length || !groups.value.length || !games.value.length,
+        () => !gamesFetched.value || !botsFetched.value || !groupsFetched.value,
     );
 
     return { formattedGames, isLoading };
