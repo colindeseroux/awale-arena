@@ -1,67 +1,126 @@
 {
-    "botInfos": {
-        "name": "Nom",
-        "group": "Groupe",
-        "createdAt": "Créé le",
-        "commitLink": "Lien du commit / référence"
-    },
     "games": {
         "bot": "Joueur",
+        "collapseRow": "Réduire la ligne",
         "createdAt": "Créé le",
         "draw": "Match nul",
+        "expandRow": "Développer la ligne",
+        "newBot": {
+            "adds": "Ajouter le bot",
+            "BotNameAlreadyExists": "Un bot avec ce nom existe déjà dans ce groupe.",
+            "cancel": "Annuler",
+            "commitLink": "Lien du commit / référence",
+            "dragAndDrop": "Glissez-déposez un fichier ici ou cliquez pour sélectionner",
+            "fieldIsRequired": "Ce champ est obligatoire",
+            "fieldsAreRequired": "Des champs sont obligatoires",
+            "group": "Groupe",
+            "name": "Nom",
+            "newBot": "Nouveau bot",
+            "OopsError": "Une erreur s'est produite.",
+            "pleaseUploadFile": "Veuillez télécharger un fichier.",
+            "selectedFile": "Fichier sélectionné : {fileName}"
+        },
+        "replay": {
+            "close": "Fermer",
+            "infos": {
+                "createdAt": "Créé le",
+                "botInfos": {
+                    "commitLink": "Lien du commit / référence",
+                    "createdAt": "Créé le",
+                    "group": "Groupe",
+                    "name": "Nom"
+                },
+                "draw": "Match nul",
+                "gameId": "ID de la partie",
+                "title": "Informations sur la partie",
+                "winner": "Gagnant"
+            },
+            "simulation": {
+                "movePlayed": "Coup joué",
+                "nextMove": "Coup suivant",
+                "previousMove": "Coup précédent",
+                "title": "Déroulement de la partie"
+            },
+            "title": "Replay"
+        },
         "search": "Rechercher...",
         "title": "Parties",
         "winner": "Gagnant"
     },
     "home": {
-        "title": "Awale Arena"
+        "title": "Awale Arena",
+        "subtitle": "Le but du jeu est d'avoir le plus de graines à la fin de la partie. Il s'agit d'une variante du jeu Awale que vous pouvez trouver sur Internet.",
+        "rules": [
+            {
+                "title": "Le plateau de jeu",
+                "description": [
+                    "Il y a 16 trous, 8 par joueur.",
+                    "Les trous sont numérotés de 1 à 16.",
+                    "Nous tournons dans le sens des aiguilles d'une montre : le trou n° 1 suit le trou n° 16 dans le sens des aiguilles d'une montre.",
+                    "Le premier joueur joue les trous impairs, le deuxième joueur joue les trous pairs."
+                ]
+            },
+            {
+                "title": "Les graines",
+                "description": [
+                    "Il existe deux couleurs principales (rouge et bleu) et une couleur transparente (transparent).",
+                    "Au début, il y a 2 graines rouges, 2 graines bleues et 2 graines transparentes par trou."
+                ]
+            },
+            {
+                "title": "Le but du jeu",
+                "description": [
+                    "Le but du jeu est de capturer plus de graines que son adversaire. Comme il y a un nombre pair de graines, il est possible que le jeu se termine par un match nul, chaque joueur ayant capturé 48 graines."
+                ]
+            },
+            {
+                "title": "La distribution des graines",
+                "description": [
+                    "Les joueurs déplacent les graines à tour de rôle. À son tour, un joueur choisit l'un des trous de hauteur sous son contrôle. Le joueur retire les graines de ce trou (voir ci-dessous pour la gestion des couleurs) et les distribue en en déposant une dans les trous dans le sens des aiguilles d'une montre (c'est-à-dire dans un ordre non décroissant) à partir de ce trou, dans un processus appelé semis.",
+                    "Les coups sont effectués en fonction des couleurs. On commence par choisir une couleur, puis toutes les graines de cette couleur sont jouées :",
+                    "- Si les graines sont rouges, elles sont réparties dans chaque trou.",
+                    "- Si les graines sont bleues, elles sont distribuées uniquement dans les trous de l'adversaire.",
+                    "- Si la couleur transparente est sélectionnée, le joueur doit décider s'il souhaite jouer en rouge ou en bleu. Il joue alors avec les autres graines de la même couleur. ATTENTION : les graines transparentes restent transparentes et sont distribuées en premier (c'est-à-dire avant les autres graines de la couleur désignée).",
+                    "Les graines ne sont pas distribuées dans le trou d'où elles proviennent. Le trou de départ est toujours laissé vide pour la couleur sélectionnée ; si un tour d'horloge est effectué, le trou initial est ignoré et la graine est placée dans le trou suivant.",
+                    "Ainsi, un coup est exprimé par NC si des graines B ou R sont jouées, où N est le numéro du trou et C la couleur jouée. Par exemple, 3R signifie que nous jouons les graines rouges du trou 3 (et uniquement les rouges). Si une couleur transparente est jouée, le coup est alors exprimé par NTC. 4TR signifie que les graines transparentes sont considérées comme rouges et qu'elles sont jouées avec les autres rouges."
+                ]
+            },
+            {
+                "title": "La capture",
+                "description": [
+                    "La capture n'a lieu que lorsqu'un joueur ramène le nombre de graines d'un trou à exactement deux ou trois (de n'importe quelle couleur). Cela capture toujours les graines du trou correspondant, et éventuellement plus : si l'avant-dernière graine a également ramené un trou à deux ou trois graines, celles-ci sont également capturées, et ainsi de suite jusqu'à ce qu'un trou ne contenant pas deux ou trois graines soit atteint. Les graines capturées sont mises de côté.",
+                    "Attention, il est permis de prendre les graines dans son propre trou et les graines sont capturées indépendamment de leur couleur.",
+                    "Affamer l'adversaire EST AUTORISÉ.",
+                    "Il est permis de prendre toutes les graines de l'adversaire. En cas de famine, toutes les graines sont capturées par le dernier joueur."
+                ]
+            },
+            {
+                "title": "Le gagnant",
+                "description": [
+                    "Le jeu est terminé lorsque :",
+                    "- Un joueur ne répond pas dans un délai d'une seconde (victoire de l'adversaire).",
+                    "- Chaque joueur a pris 40 graines (égalité).",
+                    "- Il reste strictement moins de 10 graines.",
+                    "- Un joueur a capturé 49 graines ou plus.",
+                    "- Le gagnant est le joueur qui a plus de graines que son adversaire."
+                ]
+            }
+        ]
     },
     "navigationDrawer": {
         "games": "Parties",
         "home": "Accueil"
     },
-    "newBot": {
-        "adds": "Ajouter le bot",
-        "cancel": "Annuler",
-        "commitLink": "Lien du commit / référence",
-        "dragAndDrop": "Glissez-déposez un fichier ici ou cliquez pour sélectionner",
-        "name": "Nom",
-        "newBot": "Nouveau bot",
-        "pleaseUploadFile": "Veuillez télécharger un fichier.",
-        "selectedFile": "Fichier sélectionné : {fileName}",
-        "group": "Groupe",
-        "fieldIsRequired": "Ce champ est obligatoire",
-        "fieldsAreRequired": "Des champs sont obligatoires",
-        "BotNameAlreadyExists": "Un bot avec ce nom existe déjà dans ce groupe.",
-        "OopsError": "Une erreur s'est produite."
-    },
-    "replay": {
-        "title": "Replay",
-        "info": "Informations sur la partie",
-        "gameId": "ID de la partie",
-        "createdAt": "Créé le",
-        "winner": "Gagnant",
-        "draw": "Match nul",
-        "gameplay": "Déroulement de la partie",
-        "close": "Fermer"
-    },
     "$vuetify": {
-        "open": "Ouvrir",
         "close": "Fermer",
-        "noDataText": "Aucune donnée disponible",
-        "pagination": {
-            "ariaLabel": {
-                "root": "Pagination Navigation"
-            }
-        },
         "dataFooter": {
+            "firstPage": "Première page",
             "itemsPerPageText": "Éléments par page :",
             "itemsPerPageAll": "Tous",
-            "pageText": "{0}-{1} de {2}",
-            "firstPage": "Première page",
-            "prevPage": "Page précédente",
+            "lastPage": "Dernière page",
             "nextPage": "Page suivante",
-            "lastPage": "Dernière page"
+            "pageText": "{0}-{1} de {2}",
+            "prevPage": "Page précédente"
         },
         "dataTable": {
             "sortBy": "Trier par"
@@ -69,6 +128,13 @@
         "input": {
             "clear": "Effacer"
         },
-        "loading": "Chargement..."
+        "loading": "Chargement...",
+        "noDataText": "Aucune donnée disponible",
+        "open": "Ouvrir",
+        "pagination": {
+            "ariaLabel": {
+                "root": "Pagination Navigation"
+            }
+        }
     }
 }

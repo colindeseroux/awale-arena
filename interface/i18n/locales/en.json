@@ -1,67 +1,126 @@
 {
-    "botInfos": {
-        "name": "Name",
-        "group": "Group",
-        "createdAt": "Created at",
-        "commitLink": "Commit link / reference"
-    },
     "games": {
         "bot": "Player",
+        "collapseRow": "Collapse row",
         "createdAt": "Created at",
         "draw": "Draw",
+        "expandRow": "Expand row",
+        "newBot": {
+            "adds": "Add bot",
+            "BotNameAlreadyExists": "A bot with this name already exists in this group.",
+            "cancel": "Cancel",
+            "commitLink": "Commit link / reference",
+            "dragAndDrop": "Drag and drop a file here or click to select",
+            "fieldIsRequired": "This field is required",
+            "fieldsAreRequired": "Some fields are required",
+            "group": "Group",
+            "name": "Name",
+            "newBot": "New bot",
+            "OopsError": "An error has occurred.",
+            "pleaseUploadFile": "Please upload a file.",
+            "selectedFile": "Selected file: {fileName}"
+        },
+        "replay": {
+            "close": "Close",
+            "infos": {
+                "createdAt": "Created at",
+                "botInfos": {
+                    "commitLink": "Commit link / reference",
+                    "createdAt": "Created at",
+                    "group": "Group",
+                    "name": "Name"
+                },
+                "draw": "Draw",
+                "gameId": "Game ID",
+                "title": "Game information",
+                "winner": "Winner"
+            },
+            "simulation": {
+                "movePlayed": "Move played",
+                "nextMove": "Next move",
+                "previousMove": "Previous move",
+                "title": "Game progress"
+            },
+            "title": "Replay"
+        },
         "search": "Search...",
         "title": "Games",
         "winner": "Winner"
     },
     "home": {
-        "title": "Awale Arena"
+        "title": "Awale Arena",
+        "subtitle": "The goal of the game is to have the most seeds at the end. It’s a variant of the Awale game that you can find online.",
+        "rules": [
+            {
+                "title": "The game board",
+                "description": [
+                    "There are 16 holes, 8 per player.",
+                    "The holes are numbered from 1 to 16.",
+                    "Play proceeds clockwise: hole #1 follows hole #16 in a clockwise direction.",
+                    "The first player plays the odd-numbered holes, and the second player plays the even-numbered ones."
+                ]
+            },
+            {
+                "title": "The seeds",
+                "description": [
+                    "There are two main colors (red and blue) and one transparent color.",
+                    "At the start, there are 2 red seeds, 2 blue seeds, and 2 transparent seeds in each hole."
+                ]
+            },
+            {
+                "title": "The goal of the game",
+                "description": [
+                    "The goal is to capture more seeds than your opponent. Since there’s an even number of seeds, the game can end in a draw if both players capture 48 seeds each."
+                ]
+            },
+            {
+                "title": "Seed distribution",
+                "description": [
+                    "Players take turns moving seeds. On their turn, a player chooses one of the holes under their control. The player removes the seeds from this hole (see below for color handling) and sows them by dropping one seed in each subsequent hole in a clockwise direction, a process called sowing.",
+                    "Moves are made according to colors. You start by choosing a color, and all the seeds of that color are played:",
+                    "- If the seeds are red, they are distributed into every hole.",
+                    "- If the seeds are blue, they are distributed only into the opponent’s holes.",
+                    "- If the transparent color is selected, the player must decide whether to play red or blue. They then play with the other seeds of the chosen color. WARNING: transparent seeds remain transparent and are distributed first (i.e., before the other seeds of the chosen color).",
+                    "Seeds are not distributed into the hole they came from. The starting hole is always left empty for the chosen color; if a full rotation is made, the starting hole is skipped, and the seed is placed in the next one.",
+                    "Thus, a move is expressed as NC if red or blue seeds are played, where N is the hole number and C is the color played. For example, 3R means the red seeds from hole 3 are played (and only the red ones). If a transparent color is played, the move is expressed as NTC. For example, 4TR means the transparent seeds are treated as red and played along with the other reds."
+                ]
+            },
+            {
+                "title": "Capturing",
+                "description": [
+                    "A capture occurs only when a player reduces the number of seeds in a hole to exactly two or three (of any color). This always captures the seeds from the corresponding hole, and possibly more: if the previous hole also ended up with two or three seeds, those are also captured, and so on until a hole does not contain two or three seeds. The captured seeds are set aside.",
+                    "Note: It is allowed to take seeds from your own holes, and captures are independent of seed color.",
+                    "Starving the opponent IS ALLOWED.",
+                    "It is permitted to take all the opponent’s seeds. In case of starvation, all remaining seeds are captured by the last player."
+                ]
+            },
+            {
+                "title": "Winning the game",
+                "description": [
+                    "The game ends when:",
+                    "- A player fails to respond within one second (opponent wins).",
+                    "- Each player has taken 40 seeds (draw).",
+                    "- There are fewer than 10 seeds left.",
+                    "- A player has captured 49 or more seeds.",
+                    "- The winner is the player with more seeds than the opponent."
+                ]
+            }
+        ]
     },
     "navigationDrawer": {
         "games": "Games",
         "home": "Home"
     },
-    "newBot": {
-        "adds": "Add bot",
-        "cancel": "Cancel",
-        "commitLink": "Commit link / reference",
-        "dragAndDrop": "Drag and drop a file here or click to select",
-        "name": "Name",
-        "newBot": "New bot",
-        "pleaseUploadFile": "Please upload a file.",
-        "selectedFile": "Selected file: {fileName}",
-        "group": "Group",
-        "fieldIsRequired": "This field is required",
-        "fieldsAreRequired": "Some fields are required",
-        "BotNameAlreadyExists": "A bot with this name already exists in this group.",
-        "OopsError": "An error occurred."
-    },
-    "replay": {
-        "title": "Replay",
-        "info": "Game information",
-        "gameId": "Game ID",
-        "createdAt": "Created at",
-        "winner": "Winner",
-        "draw": "Draw",
-        "gameplay": "Gameplay",
-        "close": "Close"
-    },
     "$vuetify": {
-        "open": "Open",
         "close": "Close",
-        "noDataText": "No data available",
-        "pagination": {
-            "ariaLabel": {
-                "root": "Pagination Navigation"
-            }
-        },
         "dataFooter": {
+            "firstPage": "First page",
             "itemsPerPageText": "Items per page:",
             "itemsPerPageAll": "All",
-            "pageText": "{0}-{1} of {2}",
-            "firstPage": "First page",
-            "prevPage": "Previous page",
+            "lastPage": "Last page",
             "nextPage": "Next page",
-            "lastPage": "Last page"
+            "pageText": "{0}-{1} of {2}",
+            "prevPage": "Previous page"
         },
         "dataTable": {
             "sortBy": "Sort by"
@@ -69,6 +128,13 @@
         "input": {
             "clear": "Clear"
         },
-        "loading": "Loading..."
+        "loading": "Loading...",
+        "noDataText": "No data available",
+        "open": "Open",
+        "pagination": {
+            "ariaLabel": {
+                "root": "Pagination Navigation"
+            }
+        }
     }
 }
