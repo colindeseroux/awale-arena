@@ -153,7 +153,7 @@ const addBot = async () => {
                         type="file"
                         style="display: none"
                         @change="handleFileChange"
-                    />
+                    >
                 </div>
             </VCardItem>
 

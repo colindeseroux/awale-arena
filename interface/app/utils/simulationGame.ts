@@ -42,7 +42,7 @@ class SimulationGame {
         pitIndex: number,
     ): number {
         const pitColors = this.getPitColors(pitColor);
-        let nbSeeds = pitColors[pitIndex]!;
+        const nbSeeds = pitColors[pitIndex]!;
         pitColors[pitIndex] = 0;
 
         let lastIndex = startIndex;
@@ -63,6 +63,14 @@ class SimulationGame {
     }
 
     applyMove(move: string) {
+        this.history.push({
+            red: [...this.red],
+            blue: [...this.blue],
+            transparent: [...this.transparent],
+            score: [...this.score],
+            currentPlayer: this.currentPlayer,
+        });
+
         if (
             move === "GameOver" ||
             move === "TimeOut" ||
@@ -71,14 +79,6 @@ class SimulationGame {
         ) {
             return;
         }
-
-        this.history.push({
-            red: [...this.red],
-            blue: [...this.blue],
-            transparent: [...this.transparent],
-            score: [...this.score],
-            currentPlayer: this.currentPlayer,
-        });
 
         const isTransparent = move.toUpperCase().includes("T");
         const pitColor = move.slice(-1).toUpperCase();

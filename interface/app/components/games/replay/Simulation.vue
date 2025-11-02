@@ -88,8 +88,8 @@ const playMove = () => {
                 :disabled="currentMoveIndex < 1"
                 @click="previousMove()"
             >
-                <template v-slot:prepend>
-                    <v-icon size="x-large"></v-icon>
+                <template #prepend>
+                    <v-icon size="x-large"/>
                 </template>
                 {{ $t("games.replay.simulation.previousMove") }}
             </VBtn>
@@ -102,7 +102,7 @@ const playMove = () => {
                 "
                 :rounded="!automaticallyPlay ? 'circle' : 'lg'"
                 @click="((automaticallyPlay = !automaticallyPlay), playMove())"
-            ></VBtn>
+            />
             <VBtn
                 class="mt-2"
                 append-icon="mdi-arrow-right-bold-hexagon-outline"
@@ -112,8 +112,8 @@ const playMove = () => {
                 @click="nextMove()"
             >
                 {{ $t("games.replay.simulation.nextMove") }}
-                <template v-slot:append>
-                    <v-icon size="x-large"></v-icon>
+                <template #append>
+                    <v-icon size="x-large"/>
                 </template>
             </VBtn>
         </VCardActions>
