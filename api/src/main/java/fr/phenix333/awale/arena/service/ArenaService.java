@@ -16,6 +16,7 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 
 import fr.phenix333.awale.arena.model.Game;
+import fr.phenix333.awale.arena.service.gameplay.GameEngine;
 import fr.phenix333.awale.arena.service.runner.BotRunnerFactory;
 import fr.phenix333.awale.arena.service.runner.BotRunnerStrategy;
 import fr.phenix333.logger.MyLogger;
@@ -31,6 +32,8 @@ import lombok.RequiredArgsConstructor;
 public class ArenaService {
 
     private static final MyLogger L = MyLogger.create(ArenaService.class);
+
+    private final GameEngine engine;
 
     /**
      * Get the ProcessBuilder for a bot file.
@@ -186,7 +189,7 @@ public class ArenaService {
             L.debug("Move played {} for player {}", game.getMoves().get(game.getMoves().size() - 1),
                     game.getCurrentPlayer());
 
-            game.simulateLastMove();
+            engine.playMove(game);
         }
 
         writer1.write("END");

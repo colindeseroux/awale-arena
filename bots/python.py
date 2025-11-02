@@ -9,33 +9,50 @@ class Game:
         self.score = [0, 0]
         self.current_player = 0
 
-    def apply_move(self, move: str):
-        is_transparent = 'T' in move or 't' in move
-        pit_index = int(move[:len(move) - (2 if is_transparent else 1)]) - 1
-        pit_color = move[-1].upper()
-        
-        if is_transparent:
-            pit_colors = self.transparent
-        elif pit_color == "R":
-            pit_colors = self.red
+    def get_pit_colors(self, pit: str):
+        if pit.upper() == 'R':
+            return self.red
+        elif pit.upper() == 'B':
+            return self.blue
         else:
-            pit_colors = self.blue
-        
+            return self.transparent
+
+    def distribute_seeds_by_color(self, start_index: int, pit_color: str, step: int, pit_index: int):
+        pit_colors = self.get_pit_colors(pit_color)
         nb_seeds = pit_colors[pit_index]
         pit_colors[pit_index] = 0
 
-        step = 1 if pit_color == "R" else 2
-        last_index = pit_index
+        last_index = start_index
         distributed = 0
 
         while distributed < nb_seeds:
             last_index = (last_index + step) % 16
 
+            # Pass over the starting pit
             if last_index == pit_index:
                 last_index = (last_index + step) % 16
 
             pit_colors[last_index] += 1
             distributed += 1
+
+        return last_index
+
+    def apply_move(self, move: str):
+        is_transparent = 'T' in move or 't' in move
+        pit_color = move[-1].upper()
+
+        if is_transparent:
+            pit_index = int(move[:-2]) - 1
+        else:
+            pit_index = int(move[:-1]) - 1
+
+        start_index = (pit_index - 1 + 16) % 16
+        step = 1 if pit_color == 'R' else 2
+
+        if is_transparent:
+            start_index = self.distribute_seeds_by_color(start_index, 'T', step, pit_index)
+
+        last_index = self.distribute_seeds_by_color(start_index, pit_color, step, pit_index)
 
         self.capture_seeds(last_index)
         self.current_player = (self.current_player + 1) % 2

@@ -28,39 +28,23 @@ public class Java {
             }
         }
 
-        public void applyMove(String move) {
-            boolean isTransparent = move.contains("T") || move.contains("t");
-            int pitIndex;
-            char pitColor;
+        private int[] getPitColors(char pit) {
+            return pit == 'R' ? this.red : (pit == 'B' ? this.blue : this.transparent);
+        }
 
-            if (isTransparent) {
-                pitIndex = Integer.parseInt(move.substring(0, move.length() - 2)) - 1;
-                pitColor = move.charAt(move.length() - 1);
-            } else {
-                pitIndex = Integer.parseInt(move.substring(0, move.length() - 1)) - 1;
-                pitColor = move.charAt(move.length() - 1);
-            }
-
-            int[] pitColors;
-
-            if (isTransparent) {
-                pitColors = this.transparent;
-            } else if (Character.toUpperCase(pitColor) == 'R') {
-                pitColors = this.red;
-            } else {
-                pitColors = this.blue;
-            }
+        private int distributeSeedsByColor(int startIndex, char pitColor, int step, int pitIndex) {
+            int[] pitColors = this.getPitColors(pitColor);
 
             int nbSeeds = pitColors[pitIndex];
             pitColors[pitIndex] = 0;
 
-            int lastIndex = pitIndex;
-            int step = (Character.toUpperCase(pitColor) == 'R') ? 1 : 2;
+            int lastIndex = startIndex;
             int distributed = 0;
 
             while (distributed < nbSeeds) {
                 lastIndex = (lastIndex + step) % 16;
 
+                // Pass over the starting pit
                 if (lastIndex == pitIndex) {
                     lastIndex = (lastIndex + step) % 16;
                 }
@@ -68,6 +52,29 @@ public class Java {
                 pitColors[lastIndex]++;
                 distributed++;
             }
+
+            return lastIndex;
+        }
+
+        public void applyMove(String move) {
+            boolean isTransparent = move.contains("T") || move.contains("t");
+            int pitIndex;
+            char pitColor = move.charAt(move.length() - 1);
+
+            if (isTransparent) {
+                pitIndex = Integer.parseInt(move.substring(0, move.length() - 2)) - 1;
+            } else {
+                pitIndex = Integer.parseInt(move.substring(0, move.length() - 1)) - 1;
+            }
+
+            int startIndex = (pitIndex - 1 + 16) % 16;
+            int step = (Character.toUpperCase(pitColor) == 'R') ? 1 : 2;
+
+            if (isTransparent) {
+                startIndex = this.distributeSeedsByColor(startIndex, 'T', step, pitIndex);
+            }
+
+            int lastIndex = this.distributeSeedsByColor(startIndex, pitColor, step, pitIndex);
 
             this.captureSeeds(lastIndex);
             this.currentPlayer = (this.currentPlayer + 1) % 2;
