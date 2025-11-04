@@ -109,7 +109,14 @@
     },
     "navigationDrawer": {
         "games": "Games",
-        "home": "Home"
+        "home": "Home",
+        "scoreboard": "Scoreboard"
+    },
+    "scoreboard": {
+        "title": "Bot Scoreboard",
+        "bot": "Bot",
+        "day": "Date",
+        "score": "Score"
     },
     "$vuetify": {
         "close": "Close",

@@ -1,5 +1,6 @@
 import type { Bot } from "@/types/bot";
 import type { Game } from "@/types/game";
+import type { Score } from "@/types/score";
 
 export const compositedGames = () => {
     const { games, gamesFetched } = useGames();
@@ -62,4 +63,54 @@ export const compositedGames = () => {
     );
 
     return { formattedGames, isLoading };
+};
+
+export const compositedScores = () => {
+    const { scores, scoresFetched } = useScores();
+    const { groups, groupsFetched } = useGroups();
+    const { bots, botsFetched } = useBots();
+
+    const formattedScores = computed(() => {
+        const scoresList: Score[] = [];
+
+        for (const score of scores.value) {
+            const bot = bots.value.find(b => b.id === score.bot_id);
+
+            if (!bot) {
+                return null;
+            }
+
+            const group = groups.value.find(g => g.id === score.group);
+
+            if (!group) {
+                return null;
+            }
+
+            const compositedBot: Bot = {
+                id: bot.id,
+                createdAt: new Date(bot.created_at),
+                commitLink: bot.commit_link,
+                name: bot.name,
+                group: group,
+                activated: bot.activated,
+            };
+
+            const compositedScore: Score = {
+                bot: compositedBot,
+                day: new Date(score.day),
+                score: score.score,
+            };
+
+            scoresList.push(compositedScore);
+        }
+
+        return scoresList;
+    });
+
+    const isLoading = computed(
+        () =>
+            !scoresFetched.value || !groupsFetched.value || !botsFetched.value,
+    );
+
+    return { formattedScores, isLoading };
 };

@@ -109,7 +109,14 @@
     },
     "navigationDrawer": {
         "games": "Parties",
-        "home": "Accueil"
+        "home": "Accueil",
+        "scoreboard": "Classement"
+    },
+    "scoreboard": {
+        "title": "Classement des bots",
+        "bot": "Bot",
+        "day": "Date",
+        "score": "Score"
     },
     "$vuetify": {
         "close": "Fermer",

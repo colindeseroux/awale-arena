@@ -52,6 +52,24 @@ const cookieGroup = useCookie("groupName");
 
         <VDivider />
 
+        <VList
+            aria-label="Scoreboard"
+            density="compact"
+            nav
+            role="menu"
+            :disabled="$route.path === '/scoreboard'"
+        >
+            <VListItem
+                role="menuitem"
+                prepend-icon="mdi-scoreboard"
+                to="/scoreboard"
+            >
+                <div>{{ $t("navigationDrawer.scoreboard") }}</div>
+            </VListItem>
+        </VList>
+
+        <VDivider />
+
         <VList aria-label="Settings" density="compact" nav role="menu">
             <VListItem role="menuitem">
                 <ClientOnly>

@@ -86,7 +86,7 @@ export type Database = {
                         foreignKeyName: "games_bot_1_fkey";
                         columns: ["bot_1"];
                         isOneToOne: false;
-                        referencedRelation: "daily_bot_scores";
+                        referencedRelation: "view_scores";
                         referencedColumns: ["bot_id"];
                     },
                     {
@@ -100,7 +100,7 @@ export type Database = {
                         foreignKeyName: "games_bot_2_fkey";
                         columns: ["bot_2"];
                         isOneToOne: false;
-                        referencedRelation: "daily_bot_scores";
+                        referencedRelation: "view_scores";
                         referencedColumns: ["bot_id"];
                     },
                 ];
@@ -117,6 +117,27 @@ export type Database = {
                 Update: {
                     id?: number;
                     name?: string;
+                };
+                Relationships: [];
+            };
+            scores: {
+                Row: {
+                    bot_id: number | null;
+                    day: string | null;
+                    group: number | null;
+                    score: number | null;
+                };
+                Insert: {
+                    bot_id?: number | null;
+                    day?: string | null;
+                    group?: number | null;
+                    score?: number | null;
+                };
+                Update: {
+                    bot_id?: number | null;
+                    day?: string | null;
+                    group?: number | null;
+                    score?: number | null;
                 };
                 Relationships: [];
             };
@@ -148,16 +169,17 @@ export type Database = {
                         foreignKeyName: "queues_bot_fkey";
                         columns: ["bot"];
                         isOneToOne: false;
-                        referencedRelation: "daily_bot_scores";
+                        referencedRelation: "view_scores";
                         referencedColumns: ["bot_id"];
                     },
                 ];
             };
         };
         Views: {
-            daily_bot_scores: {
+            view_scores: {
                 Row: {
                     bot_id: number | null;
+                    day: string | null;
                     group: number | null;
                     score: number | null;
                 };
