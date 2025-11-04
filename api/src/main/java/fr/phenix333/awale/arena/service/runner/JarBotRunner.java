@@ -1,15 +1,26 @@
 package fr.phenix333.awale.arena.service.runner;
 
 import java.io.File;
+import java.util.List;
 
-public class JarBotRunner implements BotRunnerStrategy {
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+/**
+ * Bot runner strategy for Java JAR bots.
+ * 
+ * @author Colin de Seroux
+ */
+@Component
+public class JarBotRunner extends AbstractSandboxedRunner {
+
+    @Value("${java.path}")
+    private String javaPath;
 
     @Override
     public Process run(File botFile, int playerNumber) throws Exception {
-        ProcessBuilder pb = new ProcessBuilder("java", "-jar", botFile.getName(), String.valueOf(playerNumber));
-        pb.directory(botFile.getParentFile());
-
-        return pb.start();
+        return this.buildProcess(botFile,
+                List.of(javaPath, "-jar", botFile.getAbsolutePath(), String.valueOf(playerNumber)));
     }
 
 }

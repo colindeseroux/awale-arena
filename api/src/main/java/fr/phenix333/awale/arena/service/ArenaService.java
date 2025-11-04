@@ -35,6 +35,8 @@ public class ArenaService {
 
     private final GameEngine engine;
 
+    private final BotRunnerFactory botRunnerFactory;
+
     /**
      * Get the ProcessBuilder for a bot file.
      * 
@@ -46,7 +48,7 @@ public class ArenaService {
      * @throws Exception
      */
     private Process getProcessBuilder(File botFile, int playerNumber) throws Exception {
-        BotRunnerStrategy strategy = BotRunnerFactory.getStrategy(botFile);
+        BotRunnerStrategy strategy = this.botRunnerFactory.getStrategy(botFile);
 
         return strategy.run(botFile, playerNumber);
     }

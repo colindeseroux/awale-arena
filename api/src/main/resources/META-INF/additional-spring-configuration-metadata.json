@@ -4,6 +4,21 @@
             "name": "cors.allowed.origins",
             "type": "java.lang.String",
             "description": "A description for 'cors.allowed.origins'"
+        },
+        {
+            "name": "sandbox.command",
+            "type": "java.lang.String",
+            "description": "A description for 'sandbox.command'"
+        },
+        {
+            "name": "python.path",
+            "type": "java.lang.String",
+            "description": "A description for 'python.path'"
+        },
+        {
+            "name": "java.path",
+            "type": "java.lang.String",
+            "description": "A description for 'java.path'"
         }
     ]
 }
