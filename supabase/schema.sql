@@ -36,3 +36,13 @@ create table public.waitings (
   constraint waitings_pkey primary key (id),
   constraint waitings_bot_fkey foreign KEY (bot) references bots (id)
 ) TABLESPACE pg_default;
+
+create table public.scores (
+  bot_id bigint null,
+  "group" bigint null,
+  day date null,
+  score numeric null
+) TABLESPACE pg_default;
+
+alter table public.scores
+replica identity full;

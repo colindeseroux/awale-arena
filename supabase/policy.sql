@@ -13,3 +13,7 @@ select
 create policy "public can read waitings" on public.waitings for
 select
     to anon using (true);
+
+create policy "public can read scores" on public.scores for
+select
+    to anon using (true);
