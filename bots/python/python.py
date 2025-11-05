@@ -12,10 +12,11 @@ class Game:
     def get_pit_colors(self, pit: str):
         if pit.upper() == 'R':
             return self.red
-        elif pit.upper() == 'B':
+        
+        if pit.upper() == 'B':
             return self.blue
-        else:
-            return self.transparent
+
+        return self.transparent
 
     def distribute_seeds_by_color(self, start_index: int, pit_color: str, step: int, pit_index: int):
         pit_colors = self.get_pit_colors(pit_color)
@@ -28,7 +29,6 @@ class Game:
         while distributed < nb_seeds:
             last_index = (last_index + step) % 16
 
-            # Pass over the starting pit
             if last_index == pit_index:
                 last_index = (last_index + step) % 16
 
@@ -60,6 +60,7 @@ class Game:
     def capture_seeds(self, last_index: int):
         while True:
             nb_seeds_in_pit = self.red[last_index] + self.blue[last_index] + self.transparent[last_index]
+            
             if 1 < nb_seeds_in_pit < 4:
                 self.score[self.current_player] += nb_seeds_in_pit
                 self.red[last_index] = 0
@@ -76,8 +77,10 @@ class Game:
         for hole in range(start_hole, 17, 2):
             if self.red[hole - 1] > 0:
                 valid_moves.append(f"{hole}R")
+                
             if self.blue[hole - 1] > 0:
                 valid_moves.append(f"{hole}B")
+                
             if self.transparent[hole - 1] > 0:
                 valid_moves.append(f"{hole}TR")
                 valid_moves.append(f"{hole}TB")
@@ -112,5 +115,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
-    
