@@ -103,13 +103,14 @@ export default defineNuxtConfig({
         includeAssets: ["img/icons/*.png"],
     },
     runtimeConfig: {
+        dataDir: process.env.DATA_DIR || "data",
         public: {
             allowedFileExtensions:
                 process.env.ALLOWED_FILE_EXTENSIONS?.split(",") || [],
-            apiBaseUrl: process.env.API_BASE_URL,
-            supabaseKey: process.env.SUPABASE_KEY,
-            supabaseUrl: process.env.SUPABASE_URL,
+            apiBaseUrl: process.env.API_BASE_URL || "http://localhost:3001/api",
         },
+        supabaseKey: process.env.SUPABASE_KEY,
+        supabaseUrl: process.env.SUPABASE_URL,
     },
     srcDir: "app",
     supabase: {

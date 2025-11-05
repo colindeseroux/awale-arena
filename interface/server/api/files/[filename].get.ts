@@ -3,8 +3,8 @@ import path from "path";
 
 export default defineEventHandler(async event => {
     const { filename } = event.context.params as { filename: string };
-
-    const folderPath = path.join(process.cwd(), "data");
+    const config = useRuntimeConfig();
+    const folderPath = config.dataDir as string;
     const safePath = path.join(folderPath, filename);
 
     if (!safePath.startsWith(folderPath)) {

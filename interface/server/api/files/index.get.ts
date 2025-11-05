@@ -1,8 +1,8 @@
 import { promises as fs } from "fs";
-import path from "path";
 
 export default defineEventHandler(async event => {
-    const folderPath = path.join(process.cwd(), "data");
+    const config = useRuntimeConfig();
+    const folderPath = config.dataDir as string;
 
     try {
         const files = await fs.readdir(folderPath);
