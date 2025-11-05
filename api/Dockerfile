@@ -13,7 +13,7 @@ FROM openjdk:26-ea-jdk-slim
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get install -y python3 autoconf bison flex gcc g++ git \
+    apt-get install -y python3 autoconf bison flex gcc g++ git inotify-tools \
                        libprotobuf-dev libnl-route-3-dev libtool make pkg-config protobuf-compiler && \
     git clone https://github.com/google/nsjail.git /tmp/nsjail && \
     cd /tmp/nsjail && make && mv nsjail /usr/local/bin/ && \
@@ -24,6 +24,10 @@ RUN mkdir -p /app/Logs /root/bots /tmp/sandbox && \
 
 COPY --from=build /app/target/awale-arena-0.0.1-SNAPSHOT.jar .
 
+COPY entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+
 ENV SUPABASE_USER="" \
     SUPABASE_PASSWORD="" \
     CORS_ALLOWED_ORIGINS="*" \
@@ -31,10 +35,4 @@ ENV SUPABASE_USER="" \
     JAVA_PATH="/usr/local/openjdk-26/bin/java" \
     PYTHON_PATH="/usr/bin/python3"
 
-CMD ["java", "-jar", "awale-arena-0.0.1-SNAPSHOT.jar", \
-     "--supabase.user=${SUPABASE_USER}", \
-     "--supabase.password=${SUPABASE_PASSWORD}", \
-     "--cors.allowed.origins=${CORS_ALLOWED_ORIGINS}", \
-     "--sandbox.command=${SANDBOX_COMMAND}", \
-     "--java.path=${JAVA_PATH}", \
-     "--python.path=${PYTHON_PATH}"]
+ENTRYPOINT ["/entrypoint.sh"]
