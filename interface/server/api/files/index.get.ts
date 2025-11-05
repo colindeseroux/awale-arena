@@ -8,7 +8,7 @@ export default defineEventHandler(async event => {
         const files = await fs.readdir(folderPath);
 
         return { files };
-    } catch (err) {
+    } catch {
         event.node.res.statusCode = 500;
 
         return { error: "InternalServerError" };

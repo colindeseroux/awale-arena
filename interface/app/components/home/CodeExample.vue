@@ -46,12 +46,12 @@ onMounted(() => {
     <VCard class="max-w-md mx-auto mt-5" elevation="3">
         <VCardTitle>
             <div class="d-flex align-center ma-1 mt-3">
-                <div class="bg-red button-circle"></div>
-                <div class="bg-yellow button-circle mx-2"></div>
-                <div class="bg-green button-circle"></div>
+                <div class="bg-red button-circle" />
+                <div class="bg-yellow button-circle mx-2" />
+                <div class="bg-green button-circle" />
             </div>
 
-            <VDivider class="mt-4"></VDivider>
+            <VDivider class="mt-4" />
         </VCardTitle>
 
         <VCardItem class="pt-0">
@@ -73,8 +73,8 @@ onMounted(() => {
                 :class="{ copying: copying }"
                 variant="text"
                 @click="copyCode"
-            ></VBtn>
-            <Prism :language="codeSnippets[activeTab]?.lang" :key="activeTab">
+            />
+            <Prism :key="activeTab" :language="codeSnippets[activeTab]?.lang">
                 {{ codeSnippets[activeTab]?.code }}
             </Prism>
         </VCardItem>

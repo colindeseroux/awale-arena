@@ -1,7 +1,8 @@
 import { onUnmounted } from "vue";
 import { useTheme } from "vuetify";
+import type { H3Event } from "h3";
 
-export function useThemeDetection(event?: any) {
+export function useThemeDetection(event?: H3Event) {
     const theme = useTheme();
 
     // Server side: set theme from middleware

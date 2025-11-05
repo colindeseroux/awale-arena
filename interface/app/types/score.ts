@@ -1,4 +1,3 @@
-import type { Group } from "@/types/group";
 import type { Bot } from "@/types/bot";
 
 export interface SupabaseScore {

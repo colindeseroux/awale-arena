@@ -17,7 +17,7 @@ export default defineEventHandler(async event => {
         const content = await fs.readFile(safePath, "utf-8");
 
         return { filename, content };
-    } catch (err) {
+    } catch {
         event.node.res.statusCode = 404;
 
         return { error: "FileNotFound" };
