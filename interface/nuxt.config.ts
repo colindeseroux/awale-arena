@@ -19,6 +19,7 @@ export default defineNuxtConfig({
         },
     },
     compatibilityDate: "2025-07-15",
+    css: ["@/assets/styles/main.css"],
     devtools: { enabled: true },
     i18n: {
         locales: [
@@ -103,9 +104,11 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         public: {
-            supabaseUrl: process.env.SUPABASE_URL,
-            supabaseKey: process.env.SUPABASE_KEY,
+            allowedFileExtensions:
+                process.env.ALLOWED_FILE_EXTENSIONS?.split(",") || [],
             apiBaseUrl: process.env.API_BASE_URL,
+            supabaseKey: process.env.SUPABASE_KEY,
+            supabaseUrl: process.env.SUPABASE_URL,
         },
     },
     srcDir: "app",

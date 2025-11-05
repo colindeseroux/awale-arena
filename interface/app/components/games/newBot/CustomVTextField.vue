@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ValidationRule } from "vuetify";
-import { defineProps, defineEmits } from "vue";
 
 const props = defineProps({
     modelValue: { type: [String, Number], default: "" },

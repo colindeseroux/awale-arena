@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
-
 definePageMeta({
     layout: "dashboard",
 });
@@ -52,5 +50,7 @@ const rules = tm("home.rules") as {
                 </ul>
             </section>
         </div>
+
+        <HomeCodeExample />
     </div>
 </template>

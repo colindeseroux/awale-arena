@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { AddBotPayload } from "@/types/bot";
-import CustomVTextField from "@/components/CustomVTextField.vue";
 
 const { t } = useI18n();
 const theme = useTheme();
@@ -28,12 +27,29 @@ const borderColor = computed(() => {
         : theme.current.value.colors.error;
 });
 
+const isAllowedFile = (file: File) => {
+    const lastDot = file.name.lastIndexOf(".");
+
+    if (lastDot === -1 && config.public.allowedFileExtensions.includes(".")) {
+        return true;
+    }
+
+    const ext = file.name.slice(lastDot).toLowerCase();
+
+    return config.public.allowedFileExtensions.includes(ext);
+};
+
 const handleDrop = (event: DragEvent) => {
     event.preventDefault();
     const droppedFile = event.dataTransfer?.files[0];
 
     if (droppedFile) {
-        file.value = droppedFile;
+        if (isAllowedFile(droppedFile)) {
+            file.value = droppedFile;
+            error.value = null;
+        } else {
+            error.value = "games.newBot.invalidFileType";
+        }
     }
 };
 
@@ -42,18 +58,25 @@ const handleFileChange = (event: Event) => {
     const selectedFile = target.files?.[0];
 
     if (selectedFile) {
-        file.value = selectedFile;
+        if (isAllowedFile(selectedFile)) {
+            file.value = selectedFile;
+            error.value = null;
+        } else {
+            error.value = "games.newBot.invalidFileType";
+        }
     }
 };
 
 const addBot = async () => {
     if (!file.value) {
         error.value = "games.newBot.pleaseUploadFile";
+
         return;
     }
 
     if (!bot.value.name || !bot.value.group.name) {
         error.value = "games.newBot.fieldsAreRequired";
+
         return;
     }
 
@@ -104,19 +127,19 @@ const addBot = async () => {
             <VCardTitle>{{ $t("games.newBot.newBot") }}</VCardTitle>
 
             <VCardItem>
-                <CustomVTextField
+                <GamesNewBotCustomVTextField
                     v-model="bot.name"
                     icon="$vuetify"
                     :label="$t('games.newBot.name')"
                     :required="true"
                     :rules="[rules.required]"
                 />
-                <CustomVTextField
+                <GamesNewBotCustomVTextField
                     v-model="bot.commitLink"
                     icon="$vuetify"
                     :label="$t('games.newBot.commitLink')"
                 />
-                <CustomVTextField
+                <GamesNewBotCustomVTextField
                     v-model="bot.group.name"
                     icon="mdi-account"
                     :label="$t('games.newBot.group')"
@@ -153,7 +176,7 @@ const addBot = async () => {
                         type="file"
                         style="display: none"
                         @change="handleFileChange"
-                    >
+                    />
                 </div>
             </VCardItem>
 

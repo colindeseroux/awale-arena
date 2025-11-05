@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Game } from "@/types/game";
-import BotInfos from "@/components/games/replay/infos/BotInfos.vue";
 
 const properties = defineProps<{
     game: Game;
@@ -41,11 +40,11 @@ const properties = defineProps<{
 
             <VDivider />
 
-            <BotInfos :bot="properties.game.bot1" />
+            <GamesReplayInfosBotInfos :bot="properties.game.bot1" />
 
             <VDivider />
 
-            <BotInfos :bot="properties.game.bot2" />
+            <GamesReplayInfosBotInfos :bot="properties.game.bot2" />
         </VCardText>
     </VCard>
 </template>

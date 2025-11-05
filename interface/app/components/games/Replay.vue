@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import type { Game } from "@/types/game";
-import Infos from "@/components/games/replay/Infos.vue";
-import Simulation from "@/components/games/replay/Simulation.vue";
 
 const properties = defineProps<{
     game: Game;
@@ -28,9 +26,9 @@ const dialogOpen = ref(false);
             <VCardTitle>{{ $t("games.replay.title") }}</VCardTitle>
 
             <div class="d-flex flex-row flex-grow-1 gap-2 ma-2">
-                <Infos :game="properties.game" />
+                <GamesReplayInfos :game="properties.game" />
 
-                <Simulation :game="properties.game" />
+                <GamesReplaySimulation :game="properties.game" />
             </div>
 
             <VCardActions>

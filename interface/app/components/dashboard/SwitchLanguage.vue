@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from "vue";
-
 const cookieLanguage = useCookie("language");
 const { current } = useLocale();
 

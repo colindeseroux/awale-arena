@@ -1,8 +1,5 @@
 <script lang="ts" setup>
 import type { DataTableHeader } from "vuetify";
-import { compositedGames } from "@/composables/parseSupabase";
-import NewBot from "@/components/games/NewBot.vue";
-import Replay from "@/components/games/Replay.vue";
 import { VSkeletonLoader } from "vuetify/components";
 
 definePageMeta({
@@ -115,7 +112,7 @@ const filteredGames = computed(() => {
 
                     <VDivider class="mx-4" inset vertical />
 
-                    <NewBot />
+                    <GamesNewBot />
                 </VSheet>
             </template>
 
@@ -181,7 +178,7 @@ const filteredGames = computed(() => {
                     <td>{{ item.bot1.commitLink }}</td>
                     <td>{{ item.bot2.commitLink }}</td>
                     <td>
-                        <Replay :game="item" />
+                        <GamesReplay :game="item" />
                     </td>
                 </tr>
             </template>

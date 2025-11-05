@@ -14,6 +14,7 @@
             "fieldIsRequired": "Ce champ est obligatoire",
             "fieldsAreRequired": "Des champs sont obligatoires",
             "group": "Groupe",
+            "invalidFileType": "Type de fichier invalide",
             "name": "Nom",
             "newBot": "Nouveau bot",
             "OopsError": "Une erreur s'est produite.",

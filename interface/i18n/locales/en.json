@@ -14,6 +14,7 @@
             "fieldIsRequired": "This field is required",
             "fieldsAreRequired": "Some fields are required",
             "group": "Group",
+            "invalidFileType": "Invalid file type",
             "name": "Name",
             "newBot": "New bot",
             "OopsError": "An error has occurred.",

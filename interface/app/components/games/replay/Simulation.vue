@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Game } from "@/types/game";
-import Case from "@/components/games/replay/simulation/Case.vue";
 import SimulationGame from "@/utils/simulationGame";
 
 const props = defineProps<{
@@ -68,7 +67,7 @@ const playMove = () => {
                     :key="rowIndex"
                     class="simulation-row"
                 >
-                    <Case
+                    <GamesReplaySimulationCase
                         v-for="idx in row"
                         :key="idx"
                         :red="simulation.red[idx] ?? 0"
@@ -89,7 +88,7 @@ const playMove = () => {
                 @click="previousMove()"
             >
                 <template #prepend>
-                    <v-icon size="x-large"/>
+                    <v-icon size="x-large" />
                 </template>
                 {{ $t("games.replay.simulation.previousMove") }}
             </VBtn>
@@ -113,7 +112,7 @@ const playMove = () => {
             >
                 {{ $t("games.replay.simulation.nextMove") }}
                 <template #append>
-                    <v-icon size="x-large"/>
+                    <v-icon size="x-large" />
                 </template>
             </VBtn>
         </VCardActions>
