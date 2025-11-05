@@ -1,2 +1,22 @@
+# C
+c/c
+
+# C++
+cpp/cpp
+
+# Java
 *.class
 *.jar
+java/graa*
+java/java.build_artifacts.txt
+java/java
+
+# Python
+*.spec
+python/python.build/
+python/python.dist/
+python/python.onefile-build/
+python/python
+
+# All
+*.exe

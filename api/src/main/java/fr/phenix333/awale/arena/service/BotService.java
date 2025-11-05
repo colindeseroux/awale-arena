@@ -47,7 +47,8 @@ public class BotService {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
 
         File newFile = new File(FileUtils.getUserDirectory(), "bots");
-        newFile = new File(newFile, String.format("%d.%s", botId, extension));
+        newFile = new File(newFile,
+                extension.isBlank() ? String.valueOf(botId) : String.format("%d.%s", botId, extension));
 
         file.transferTo(newFile);
     }

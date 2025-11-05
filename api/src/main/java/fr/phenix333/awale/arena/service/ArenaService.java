@@ -69,8 +69,8 @@ public class ArenaService {
 
         File[] files = new File[2];
 
-        File[] bot1 = botsDir.listFiles((dir, name) -> name.startsWith(game.getBot1().getId().toString() + "."));
-        File[] bot2 = botsDir.listFiles((dir, name) -> name.startsWith(game.getBot2().getId().toString() + "."));
+        File[] bot1 = botsDir.listFiles((dir, name) -> name.split("\\.")[0].equals(game.getBot1().getId().toString()));
+        File[] bot2 = botsDir.listFiles((dir, name) -> name.split("\\.")[0].equals(game.getBot2().getId().toString()));
 
         if (bot1 == null || bot1.length == 0 || bot2 == null || bot2.length == 0) {
             throw new Exception("Bot files not found");

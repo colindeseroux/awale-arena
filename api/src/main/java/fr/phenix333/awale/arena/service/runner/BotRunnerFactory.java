@@ -20,6 +20,8 @@ public class BotRunnerFactory {
 
     private final PythonBotRunner pythonBotRunner;
 
+    private final ExeBotRunner exeBotRunner;
+
     /**
      * Gets the appropriate BotRunnerStrategy based on the bot file type.
      *
@@ -37,8 +39,10 @@ public class BotRunnerFactory {
                 return this.jarBotRunner;
             case "py":
                 return this.pythonBotRunner;
+            case "exe":
+                return this.exeBotRunner;
             default:
-                throw new IllegalArgumentException("Unsupported bot language: " + name);
+                return this.exeBotRunner;
         }
     }
 
